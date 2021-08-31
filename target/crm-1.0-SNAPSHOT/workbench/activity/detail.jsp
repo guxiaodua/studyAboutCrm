@@ -235,9 +235,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" +r
 
 		//alert(id);
 
-		//将模态窗口中,隐藏域
+		//将模态窗口中,隐藏域中的id进行赋值
+		$("#remarkId").val(id);
 
-		//找到指定的存放备注信息的标签
+		//找到指定的存放备注信息的h5标签
 		var noteContent = $("#e"+id).html();
 
 		//将h5中展现出来的信息,赋予到修改操作模态窗口的文本域中
