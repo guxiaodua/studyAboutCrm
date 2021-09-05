@@ -544,8 +544,9 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" +r
 					<tbody>
 						<tr>
 							<td><input type="checkbox" /></td>
-							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/clue/detail.jsp';">李四先生</a></td>
-							<td>动力节点</td>
+							<%--直接写死,之前写过了--%>
+							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/clue/detail.do?id=5b655feeb29d4eb4b6cb823213cc920f';">马云先生</a></td>
+							<td>学习使用</td>
 							<td>010-84846003</td>
 							<td>12345678901</td>
 							<td>广告</td>
@@ -555,7 +556,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" +r
                         <tr class="active">
                             <td><input type="checkbox" /></td>
                             <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.jsp';">李四先生</a></td>
-                            <td>动力节点</td>
+                            <td>学习使用</td>
                             <td>010-84846003</td>
                             <td>12345678901</td>
                             <td>广告</td>

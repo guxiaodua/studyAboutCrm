@@ -15,9 +15,15 @@
     <title>Title</title>
 </head>
 <body>
+
+        <%--
+            aname = "1"
+            clueId = "5b655feeb29d4eb4b6cb823213cc920f"
+        --%>
+
     $.ajax({
     
-        url : "workbench/clue/save.do",
+        url : "",
         data : {
 
         },

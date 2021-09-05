@@ -37,7 +37,95 @@ public class ClueController extends HttpServlet {
             getUserList(request,response);
         }else if ("/workbench/clue/save.do".equals(path)){
             save(request,response);
+        }else if ("/workbench/clue/detail.do".equals(path)){
+            detail(request,response);
+        }else if ("/workbench/clue/getActivityListByClueId.do".equals(path)){
+            getActivityListByClueId(request,response);
+        }else if ("/workbench/clue/unbund.do".equals(path)){
+            unbund(request,response);
+        }else if ("/workbench/clue/getActivityListByNameAddNotByClueId.do".equals(path)){
+            getActivityListByNameAddNotByClueId(request,response);
+        }else if ("/workbench/clue/bund.do".equals(path)){
+            bund(request,response);
         }
+    }
+
+    private void bund(HttpServletRequest request, HttpServletResponse response) {
+
+        System.out.println("执行关联市场活动的操作");
+
+        String cid = request.getParameter("cid");
+        String aids[] = request.getParameterValues("aid");
+
+        ClueService cs = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+
+        boolean flag = cs.bund(cid,aids);
+
+        PrintJson.printJsonFlag(response,flag);
+
+    }
+
+    private void getActivityListByNameAddNotByClueId(HttpServletRequest request, HttpServletResponse response) {
+
+        System.out.println("查询市场活动列表(根据名称模糊查询+排除掉已经关联指定线索的列表");
+
+        String aname = request.getParameter("aname");
+        String clueId = request.getParameter("clueId");
+
+        Map<String,String> map = new HashMap<String, String>();
+        map.put("aname",aname);
+        map.put("clueId",clueId);
+
+        ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+
+        List<Activity> aList = as.getActivityListByNameAddNotByClueId(map);
+
+        PrintJson.printJsonObj(response,aList);
+
+    }
+
+    private void unbund(HttpServletRequest request, HttpServletResponse response) {
+
+        System.out.println("执行解除关联操作");
+
+        String id = request.getParameter("id");
+
+        ClueService cs = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+
+        boolean flag = cs.unbund(id);
+
+        PrintJson.printJsonFlag(response,flag);
+
+
+    }
+
+    private void getActivityListByClueId(HttpServletRequest request, HttpServletResponse response) {
+
+        System.out.println("根据线索id查询关联的市场活动列表");
+
+        String clueId = request.getParameter("clueId");
+
+        ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+
+        List<Activity> aList = as.getActivityListByClueId(clueId);
+
+        PrintJson.printJsonObj(response,aList);
+
+    }
+
+    private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+
+        System.out.println("跳转到线索详细信息页");
+
+        String id = request.getParameter("id");
+
+        ClueService cs = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+
+        Clue c = cs.detail(id);
+
+        request.setAttribute("c",c);
+        request.getRequestDispatcher("/workbench/clue/detail.jsp").forward(request,response);
+
     }
 
     private void save(HttpServletRequest request, HttpServletResponse response) {
