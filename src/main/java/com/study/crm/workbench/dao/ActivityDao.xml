@@ -5,6 +5,24 @@
 
 <mapper namespace="com.study.crm.workbench.dao.ActivityDao">
 
+    <select id="getActivityListByName" resultType="Activity">
+
+        select
+
+        a.id,
+        a.name,
+        a.startDate,
+        a.endDate,
+        u.name as owner
+
+        from tbl_activity a
+        join tbl_user u
+        on a.owner=u.id
+
+        where a.name like '%' #{aname} '%'
+
+    </select>
+
     <select id="getActivityListByNameAddNotByClueId" resultType="Activity">
 
         select
@@ -28,9 +46,6 @@
             from tbl_clue_activity_relation
 
             where clueId=#{clueId}
-            /*
-                5b655feeb29d4eb4b6cb823213cc920b
-            */
 
         )
 
