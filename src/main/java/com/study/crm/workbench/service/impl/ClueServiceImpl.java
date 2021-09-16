@@ -1,17 +1,35 @@
 package com.study.crm.workbench.service.impl;
 
+import com.study.crm.utils.DateTimeUtil;
 import com.study.crm.utils.SqlSessionUtil;
 import com.study.crm.utils.UUIDUtil;
-import com.study.crm.workbench.dao.ClueActivityRelationDao;
-import com.study.crm.workbench.dao.ClueDao;
+import com.study.crm.workbench.dao.*;
 import com.study.crm.workbench.domain.Clue;
 import com.study.crm.workbench.domain.ClueActivityRelation;
+import com.study.crm.workbench.domain.Tran;
 import com.study.crm.workbench.service.ClueService;
+
+import java.util.zip.DataFormatException;
 
 public class ClueServiceImpl implements ClueService {
 
+    //线索相关表
     private ClueDao clueDao = SqlSessionUtil.getSqlSession().getMapper(ClueDao.class);
     private ClueActivityRelationDao clueActivityRelationDao = SqlSessionUtil.getSqlSession().getMapper(ClueActivityRelationDao.class);
+    private ClueRemarkDao clueRemarkDao = SqlSessionUtil.getSqlSession().getMapper(ClueRemarkDao.class);
+
+    //客户相关表
+    private CustomerDao customerDao = SqlSessionUtil.getSqlSession().getMapper(CustomerDao.class);
+    private CustomerRemarkDao customerRemarkDao = SqlSessionUtil.getSqlSession().getMapper(CustomerRemarkDao.class);
+
+    //联系人相关表
+    private ContactsDao contactsDao = SqlSessionUtil.getSqlSession().getMapper(ContactsDao.class);
+    private ContactsRemarkDao contactsRemarkDao = SqlSessionUtil.getSqlSession().getMapper(ContactsRemarkDao.class);
+    private ContactsActivityRelationDao contactsActivityRelationDao = SqlSessionUtil.getSqlSession().getMapper(ContactsActivityRelationDao.class);
+
+    //交易相关表
+    private TranDao tranDao = SqlSessionUtil.getSqlSession().getMapper(TranDao.class);
+    private TranHistoryDao tranHistoryDao = SqlSessionUtil.getSqlSession().getMapper(TranHistoryDao.class);
 
     public boolean save(Clue c) {
 
@@ -74,4 +92,17 @@ public class ClueServiceImpl implements ClueService {
 
         return flag;
     }
+
+    public boolean convert(String clueId, Tran t, String createBy) {
+
+        String createTime = DateTimeUtil.getSysTime();
+
+        boolean flag = true;
+
+
+
+        return flag;
+    }
+
+
 }

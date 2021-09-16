@@ -11,6 +11,7 @@ import com.study.crm.vo.PaginationVO;
 import com.study.crm.workbench.domain.Activity;
 import com.study.crm.workbench.domain.ActivityRemark;
 import com.study.crm.workbench.domain.Clue;
+import com.study.crm.workbench.domain.Tran;
 import com.study.crm.workbench.service.ActivityService;
 import com.study.crm.workbench.service.ClueService;
 import com.study.crm.workbench.service.impl.ActivityServiceImpl;
@@ -54,7 +55,7 @@ public class ClueController extends HttpServlet {
         }
     }
 
-    private void convert(HttpServletRequest request, HttpServletResponse response) {
+    private void convert(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         System.out.println("执行线索转换操作");
 
@@ -63,12 +64,51 @@ public class ClueController extends HttpServlet {
         //接收是否需要创建交易
         String flag = request.getParameter("flag");
 
+        String createBy = ((User)request.getSession().getAttribute("user")).getName();
+
+        Tran t = null;
+
         if ("a".equals(flag)){
 
+            t = new Tran();
+
             //接收交易表单中的参数
+            String money = request.getParameter("money");
+            String name = request.getParameter("name");
+            String expectedDate = request.getParameter("expectedDate");
+            String stage = request.getParameter("stage");
+            String activityId = request.getParameter("activityId");
+            String id = UUIDUtil.getUUID();
+            String createTime = DateTimeUtil.getSysTime();
+
+            t.setId(id);
+            t.setMoney(money);
+            t.setName(name);
+            t.setExpectedDate(expectedDate);
+            t.setStage(stage);
+            t.setActivityId(activityId);
+            t.setCreateBy(createBy);
+            t.setCreateTime(createTime);
 
         }
 
+        ClueService cs = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+
+        /*
+
+            为业务层传递的参数:
+                1.必须传递的参数clueId,有了这个clueId之后我们才知道要转换哪条记录
+                2.必须传递参数t因为在线索转换的过程中,有可能会临时创建一笔交易(业务层接收的t也有可能是个null)
+
+         */
+
+        boolean flag1 = cs.convert(clueId,t,createBy);
+
+        if (flag1){
+
+            response.sendRedirect(request.getContextPath()+"/workbench/clue/index.jsp");
+
+        }
 
     }
 
