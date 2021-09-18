@@ -254,7 +254,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" +r
 
 			<input type="hidden" name="flag" value="a"/>
 
-			<input type="hidden" id="clueId" value="${param.id}"/>
+			<input type="hidden" name="clueId" value="${param.id}"/>
 
 		  <div class="form-group" style="width: 400px; position: relative; left: 20px;">
 		    <label for="amountOfMoney">金额</label>

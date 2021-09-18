@@ -7,7 +7,7 @@
 
     <insert id="save">
 
-        intsert into tbl_customer(
+        insert into tbl_customer(
 
             id,
             owner,
